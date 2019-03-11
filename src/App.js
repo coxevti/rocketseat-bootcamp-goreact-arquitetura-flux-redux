@@ -2,10 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import store from './store';
+import TodoList from './components/todolist';
 
 const App = () => (
   <Provider store={store}>
-    <h1>Hello Word</h1>
+    <TodoList />
   </Provider>
 );
 
