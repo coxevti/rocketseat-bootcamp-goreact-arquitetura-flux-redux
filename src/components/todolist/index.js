@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const TodoList = (props) => {
-  const { todolist } = props;
-  return (
+const TodoList = ({ todolist, addTodo }) => (
+  <Fragment>
     <ul>
       {todolist.map(item => (
         <li key={item.id}>{item.text}</li>
       ))}
     </ul>
-  );
-};
+    <button type="button" onClick={() => addTodo('Nova Tarefa')}>
+      Adicionar
+    </button>
+  </Fragment>
+);
 
 TodoList.propTypes = {
   todolist: PropTypes.arrayOf(
@@ -26,4 +28,11 @@ const mapStateToProps = state => ({
   todolist: state.todolist,
 });
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = dispatch => ({
+  addTodo: text => dispatch({ type: 'ADD_TODO', payload: { text } }),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TodoList);
