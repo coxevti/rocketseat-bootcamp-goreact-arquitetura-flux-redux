@@ -4,11 +4,17 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import * as TodosActions from '../../store/actions/todolist';
 
-const TodoList = ({ todolist, addTodo }) => (
+const TodoList = ({ todolist, addTodo, removeTodo }) => (
   <Fragment>
     <ul>
       {todolist.map(item => (
-        <li key={item.id}>{item.text}</li>
+        <li key={item.id}>
+          {item.text}
+          {' '}
+          <button type="button" onClick={() => removeTodo(item.id)}>
+            Remover
+          </button>
+        </li>
       ))}
     </ul>
     <button type="button" onClick={() => addTodo('Nova Tarefa')}>
@@ -25,6 +31,7 @@ TodoList.propTypes = {
     }),
   ).isRequired,
   addTodo: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -9,10 +9,19 @@ const INITIAL_STATE = [
   },
 ];
 
+const randomNumber = (min, max) => {
+  const minMath = Math.ceil(min);
+  const maxMath = Math.floor(max);
+  return Math.floor(Math.random() * (maxMath - minMath) + min);
+};
+
 export default function todolist(state = INITIAL_STATE, action) {
+  const id = randomNumber(1, 1000000);
   switch (action.type) {
     case 'ADD_TODO':
-      return [...state, { id: state.length + 1, text: action.payload.text }];
+      return [...state, { id, text: `${action.payload.text} - ${id}` }];
+    case 'REMOVE_TODO':
+      return state.filter(todo => todo.id !== action.payload.id);
     default:
       return state;
   }
