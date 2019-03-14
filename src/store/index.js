@@ -5,17 +5,17 @@ import '../configs/reactotron';
 import sagas from './sagas';
 
 const middlewares = [];
-const sagaMiddleware = createSagaMiddleware();
+const sagaMonitor = process.env.NODE_ENV === 'development' ? console.tron.createSagaMonitor() : null;
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 middlewares.push(sagaMiddleware);
 
-const store = process.env.NODE_ENV === 'development'
-  ? createStore(
-    reducers,
-    compose(
-      console.tron.createEnhancer(),
-      applyMiddleware(...middlewares),
-    ),
-  )
-  : createStore(reducers);
+const tronMiddleware = process.env.NODE_ENV === 'development' ? console.tron.createEnhancer : () => {};
+const store = createStore(
+  reducers,
+  compose(
+    applyMiddleware(...middlewares),
+    tronMiddleware(),
+  ),
+);
 sagaMiddleware.run(sagas);
 export default store;
