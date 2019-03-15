@@ -18,6 +18,7 @@ class Main extends Component {
           url: PropTypes.string,
         }),
       ),
+      error: PropTypes.oneOfType([PropTypes.string]),
     }).isRequired,
   };
 
@@ -45,7 +46,10 @@ class Main extends Component {
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
           <button type="submit">Adicionar</button>
-          {favorites.loading && <span>Carregando...</span>}
+          {favorites.loading && <span style={{ marginLeft: '10px' }}>Carregando...</span>}
+          {!!favorites.error && (
+            <span style={{ color: '#ff4c4c', marginLeft: '10px' }}>{favorites.error}</span>
+          )}
         </form>
         <ul>
           {favorites.data.map(favorite => (
