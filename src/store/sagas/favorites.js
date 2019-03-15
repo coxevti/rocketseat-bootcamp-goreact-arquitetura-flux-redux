@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import api from '../../services/api';
 
-import { addFavoriteSuccess, addFavoriteFailure } from '../actions/favorites';
+import { Creators as FavoriteActions } from '../ducks/favorites';
 
 export function* addFavorite(action) {
   try {
@@ -13,8 +13,8 @@ export function* addFavorite(action) {
       description: data.description,
       url: data.html_url,
     };
-    yield put(addFavoriteSuccess(repositoryData));
+    yield put(FavoriteActions.addFavoriteSuccess(repositoryData));
   } catch (error) {
-    yield put(addFavoriteFailure('usuario/repositorio não encontrado'));
+    yield put(FavoriteActions.addFavoriteFailure('usuario/repositorio não encontrado'));
   }
 }
